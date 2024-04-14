@@ -80,7 +80,7 @@ function VoidWanderers:StartActivity()
 	brainpos[3] = self.Mid + Vector(self.ResX, self.ResY2)
 	self.ObserverPos = brainpos[3]
 
-	for plr = 0, 3 do
+	for plr = 1, 3 do
 		local brn
 		if self:PlayerActive(plr) and self:PlayerHuman(plr) then
 			brn = CreateActor("Fake Brain Case")
