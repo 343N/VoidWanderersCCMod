@@ -558,6 +558,7 @@ function CF_GetCloneShopArray(gs, makefilters)
 				arr[ii] = {}
 				arr[ii]["Preset"] = CF_ActPresets[f][itm]
 				arr[ii]["Class"] = CF_ActClasses[f][itm] or "AHuman"
+				arr[ii]["Module"] = CF_ActModules[f][itm] or nil
 
 				arr[ii]["Faction"] = f
 				arr[ii]["Index"] = itm

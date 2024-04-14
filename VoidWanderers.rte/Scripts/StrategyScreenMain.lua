@@ -54,53 +54,47 @@ function VoidWanderers:StartActivity()
 	for plr = 0, self.PlayerCount - 1 do
 		FrameMan:ClearScreenText(plr)
 	end
-	
+
 	self.FirePressed = {}
 	--Make an invisible brain.
-	self.MidOffset = Vector(0,0)
-	if self.PlayerCount == 1 then
-		self.brain = CreateActor("Fake Brain Case")
-		self.brain.Scale = 0
-		self.brain.Team = Activity.TEAM_1
-		self.brain.Pos = self.Mid
-		self.brain.HitsMOs = false
-		self.brain.GetsHitByMOs = false
-		MovableMan:AddActor(self.brain)
-		self:SetPlayerBrain(self.brain, Activity.TEAM_1)
-		self:SwitchToActor(self.brain, Activity.PLAYER_1, Activity.TEAM_1)
-		self.CurCursorMO = self.brain
-		self.LastCursorMO = self.brain
-	else
-		local brainpos = {}
+	self.MidOffset = Vector(0, 0)
+	self.brain = CreateActor("Fake Brain Case")
+	self.brain.Scale = 0
+	self.brain.Team = Activity.TEAM_1
+	self.brain.Pos = self.Mid
+	self.brain.HitsMOs = false
+	self.brain.GetsHitByMOs = false
+	MovableMan:AddActor(self.brain)
+	self:SetPlayerBrain(self.brain, Activity.TEAM_1)
+	self:SwitchToActor(self.brain, Activity.PLAYER_1, Activity.TEAM_1)
+	self.CurCursorMO = self.brain
+	self.LastCursorMO = self.brain
 
-		local offset = 0.5
+	local brainpos = {}
 
-		brainpos[0] = self.Mid + Vector(0, 0)
-		brainpos[1] = self.Mid + Vector(self.ResX, -self.ResY2)
-		brainpos[2] = self.Mid + Vector(self.ResX, 0)
-		brainpos[3] = self.Mid + Vector(self.ResX, self.ResY2)
-		self.ObserverPos = brainpos[3]
+	local offset = 0.5
 
-		for plr = 0, 3 do
-			local brn
-			if self:PlayerActive(plr) and self:PlayerHuman(plr) then
-				brn = CreateActor("Fake Brain Case")
-				brn.Scale = 0
-				brn.Team = Activity.TEAM_1
-				brn.Pos = brainpos[plr]
-				brn.HitsMOs = false
-				brn.GetsHitByMOs = false
-				MovableMan:AddActor(brn)
-				self:SetPlayerBrain(brn, plr)
-				self:SwitchToActor(brn, plr, Activity.TEAM_1)
-				CameraMan:SetScrollTarget(brn.Pos, 0.04, self:ScreenOfPlayer(plr))
-				
-				--brn.Team = -1;
+	brainpos[0] = self.Mid + Vector(0, 0)
+	brainpos[1] = self.Mid + Vector(self.ResX, -self.ResY2)
+	brainpos[2] = self.Mid + Vector(self.ResX, 0)
+	brainpos[3] = self.Mid + Vector(self.ResX, self.ResY2)
+	self.ObserverPos = brainpos[3]
 
-				if self.brain == nil then
-					self.brain = brn
-				end
-			end
+	for plr = 0, 3 do
+		local brn
+		if self:PlayerActive(plr) and self:PlayerHuman(plr) then
+			brn = CreateActor("Fake Brain Case")
+			brn.Scale = 0
+			brn.Team = Activity.TEAM_1
+			brn.Pos = brainpos[plr]
+			brn.HitsMOs = false
+			brn.GetsHitByMOs = false
+			MovableMan:AddActor(brn)
+			self:SetPlayerBrain(brn, plr)
+			self:SwitchToActor(brn, plr, Activity.TEAM_1)
+			CameraMan:SetScrollTarget(brn.Pos, 0.04, self:ScreenOfPlayer(plr))
+
+			--brn.Team = -1;
 		end
 	end
 
@@ -147,12 +141,14 @@ function VoidWanderers:StartActivity()
 		end
 	end
 end
+
 -----------------------------------------------------------------------------------------
 --
 -----------------------------------------------------------------------------------------
 function VoidWanderers:ClearMessages()
 	self.Messages = {}
 end
+
 -----------------------------------------------------------------------------------------
 --
 -----------------------------------------------------------------------------------------
@@ -167,6 +163,7 @@ function VoidWanderers:ShowMessage(msg, iscritical)
 
 	table.insert(self.Messages, newmsg)
 end
+
 -----------------------------------------------------------------------------------------
 --
 -----------------------------------------------------------------------------------------
@@ -192,6 +189,7 @@ function VoidWanderers:DisplayCurrentMessage()
 		end
 	end
 end
+
 -----------------------------------------------------------------------------------------
 --
 -----------------------------------------------------------------------------------------
@@ -201,8 +199,8 @@ function VoidWanderers:AddAIAttackEvent(terr, base, facil)
 
 	for i = 1, CF_MaxAttackEventSlots do
 		if
-			self.GS["AttackEvent" .. i .. "Expires"] == nil
-			or tonumber(self.GS["AttackEvent" .. i .. "Expires"]) < tonumber(self.GS["Time"])
+				self.GS["AttackEvent" .. i .. "Expires"] == nil
+				or tonumber(self.GS["AttackEvent" .. i .. "Expires"]) < tonumber(self.GS["Time"])
 		then
 			found = i
 			break
@@ -214,6 +212,7 @@ function VoidWanderers:AddAIAttackEvent(terr, base, facil)
 	self.GS["AttackEvent" .. found .. "Facility"] = facil
 	self.GS["AttackEvent" .. found .. "Base"] = base
 end
+
 -----------------------------------------------------------------------------------------
 --
 -----------------------------------------------------------------------------------------
@@ -224,6 +223,7 @@ function VoidWanderers:DrawMouseCursor()
 	MovableMan:AddParticle(pix)
 	--end
 end
+
 -----------------------------------------------------------------------------------------
 -- Draw label element
 -----------------------------------------------------------------------------------------
@@ -250,6 +250,7 @@ function VoidWanderers:DrawLabel(el, state)
 		end
 	end
 end
+
 -----------------------------------------------------------------------------------------
 -- Draw button element
 -----------------------------------------------------------------------------------------
@@ -282,6 +283,7 @@ function VoidWanderers:DrawButton(el, state, drawthistime)
 		end
 	end
 end
+
 -----------------------------------------------------------------------------------------
 -- Check if pos is within button area
 -----------------------------------------------------------------------------------------
@@ -300,10 +302,10 @@ function VoidWanderers:IsWithinButton(el, pos)
 		local wy = el["Height"]
 
 		if
-			pos.X > elpos.X - (wx / 2)
-			and pos.X < elpos.X + (wx / 2)
-			and pos.Y > elpos.Y - (wy / 2)
-			and pos.Y < elpos.Y + (wy / 2)
+				pos.X > elpos.X - (wx / 2)
+				and pos.X < elpos.X + (wx / 2)
+				and pos.Y > elpos.Y - (wy / 2)
+				and pos.Y < elpos.Y + (wy / 2)
 		then
 			return true
 		end
@@ -311,6 +313,7 @@ function VoidWanderers:IsWithinButton(el, pos)
 
 	return false
 end
+
 -----------------------------------------------------------------------------------------
 -- Redraw non-custom elements
 -----------------------------------------------------------------------------------------
@@ -348,6 +351,7 @@ function VoidWanderers:RedrawKnownFormElements()
 		end
 	end
 end
+
 -----------------------------------------------------------------------------------------
 -- Get element id above whicj mouse currently is
 -----------------------------------------------------------------------------------------
@@ -362,6 +366,7 @@ function VoidWanderers:GetMouseOverKnownFormElements()
 
 	return nil
 end
+
 -----------------------------------------------------------------------------------------
 -- Update Activity
 -----------------------------------------------------------------------------------------
@@ -401,10 +406,10 @@ function VoidWanderers:UpdateActivity()
 		self:RestoreAI()
 	end
 
-	local cont = self.PlayerCount == 1 and self.CurCursorMO:GetController() or self.brain:GetController()
+	local cont = self.CurCursorMO and self.CurCursorMO:GetController() or self.brain:GetController()
 	--Read standard input, ugly but at least it will be operational if mouse fail for
 	-- whatever reason
-	
+
 
 	if CF_EnableKeyboardControls then
 		if cont:IsState(Controller.MOVE_LEFT) then
@@ -439,17 +444,23 @@ function VoidWanderers:UpdateActivity()
 	--		print (i)
 	--	end
 	--end
-	-- changePos if self.brain is not 
+	-- changePos if self.brain is not
 
 	-- Don't let the cursor leave the screen
 
-	
-	if self.PlayerCount == 1 and self.CurCursorMO.ID ~= self.LastCursorMO.ID then
+
+	self.CurCursorMO = self:GetControlledActor(Activity.PLAYER_1)
+	if self.CurCursorMO and self.CurCursorMO.ID ~= self.LastCursorMO.ID then
 		self.LastCursorMO = self.CurCursorMO
-		self:SetPlayerBrain(self.CurCursorMO, Activity.PLAYER_1)
+
+		self.MidOffset = (self.CurCursorMO.Pos - self.Mid)
+		-- print("NEW OFFSET " .. "X: " .. self.MidOffset.X .. ", Y: " .. self.MidOffset.Y)
+
+
 		
+		-- self:SetPlayerBrain(self.CurCursorMO, Activity.PLAYER_1)
+
 		-- print("MID: " .. self.Mid.X .. ", " .. self.Mid.Y)
-		self.MidOffset = (self.CurCursorMO.Pos - self.Mid) / 2
 		-- print("MID: " .. self.Mid.X .. ", " .. self.Mid.Y)
 	end
 
@@ -457,7 +468,6 @@ function VoidWanderers:UpdateActivity()
 	-- print("MID: " .. self.Mid.X .. ", " .. self.Mid.Y)
 	-- print("MOUSE: " .. self.Mouse.X .. ", " .. self.Mouse.Y)
 
-	self.CurCursorMO = self:GetControlledActor(Activity.PLAYER_1)
 
 	-- local CUR_MPOS = self.Mouse ?idOff
 	local LEFT_BOUND = self.Mid.X + -self.ResX2 + self.MidOffset.X
@@ -474,11 +484,11 @@ function VoidWanderers:UpdateActivity()
 		self.Mouse.Y = TOP_BOUND
 	end
 
-	if self.Mouse.X > RIGHT_BOUND  then
+	if self.Mouse.X > RIGHT_BOUND then
 		self.Mouse.X = RIGHT_BOUND
 	end
 
-	if self.Mouse.Y > BOTTOM_BOUND  then
+	if self.Mouse.Y > BOTTOM_BOUND then
 		self.Mouse.Y = BOTTOM_BOUND
 	end
 
@@ -588,6 +598,7 @@ function VoidWanderers:UpdateActivity()
 
 	--print (self.Mouse - self.Mid)--]]--
 end
+
 -----------------------------------------------------------------------------------------
 -- Thats all folks!!!
 -----------------------------------------------------------------------------------------

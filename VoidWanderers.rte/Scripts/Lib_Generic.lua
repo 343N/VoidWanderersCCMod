@@ -1668,3 +1668,35 @@ end
 -----------------------------------------------------------------------------------------
 --
 -----------------------------------------------------------------------------------------
+function dump(o)
+	if type(o) == 'table' then
+		 local s = '{ '
+		 for k,v in pairs(o) do
+				if type(k) ~= 'number' then k = '"'..k..'"' end
+				s = s .. '['..k..'] = ' .. dump(v) .. ','
+		 end
+		 return s .. '}\n'
+	else
+		 return tostring(o)
+	end
+end
+-----------------------------------------------------------------------------------------
+--
+-----------------------------------------------------------------------------------------
+function print_table(tb)
+
+	local s = dump(tb)
+
+	local chars_per_line = 500
+	local iterations = math.max(1, #s / chars_per_line)
+	print(iterations)
+	print(#s)
+	for i=1, iterations do
+		local startInd = chars_per_line * (i - 1)
+		local endInd = math.min(i * (chars_per_line), #s)
+		print(startInd .. " start - end " .. endInd)
+		local chunk = string.sub(s, startInd, endInd)
+		print(chunk)
+	end
+
+end
